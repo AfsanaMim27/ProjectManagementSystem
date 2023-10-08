@@ -78,9 +78,9 @@ VALUES (7, 'Stakeholder Identification and Analysis', 'Analyze their needs, expe
 ,(7, 'Create app home page', 'Display app home page', '2023-08-11', '2023-08-20', '2023-09-09', 180, 3, 1, 3)
 ,(7, 'Create contact details page', 'Display contact information page', '2023-09-11', '2023-10-05', '2023-10-05', 180, 4, 1, 3)
 ,(2, 'Create contact add page', 'Contact add page', '2023-10-06', '2023-12-15', NULL, 300, 4, 1, 3)
-,(2, 'Create project add page', 'Project add page', '2023-10-20', '2023-12-15', NULL, 300, 4, 1, 3)
-,(2, 'Create project details page', 'Display project detials page', '2023-11-01', '2023-12-25', NULL, 300, 4, 1, 3)
-,(2, 'Task assign', 'Allow user to assign a task', '2023-11-15', '2023-12-25', NULL, 300, 4, 1, 3);
+,(2, 'Create project add page', 'Project add page', '2023-10-20', '2023-12-15', NULL, 300, 3, 1, 3)
+,(2, 'Create project details page', 'Display project detials page', '2023-11-01', '2023-12-25', NULL, 300, 3, 1, 3)
+,(2, 'Task assign', 'Allow user to assign a task', '2023-11-15', '2023-12-25', NULL, 300, 3, 1, 3);
 
 INSERT INTO Activities (ActivityStatus, Title, ShortDescription, Duration, BillableTime, TaskId, WorkedDate, WorkedBy)
 VALUES (10, 'Complete project requirement analysis', 'Analyze the needs and expection of the app', 4, 4, 1, '2023-08-01', 3)
