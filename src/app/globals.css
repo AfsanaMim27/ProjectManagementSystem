@@ -1,0 +1,19 @@
+.taskStatus{
+    border-radius: 15px;
+    color: white;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.contentsContainer{
+    background-color: white;
+    padding: 30px 20px;
+}
+
+.contactCounts{
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+    text-align: center;
+    margin-bottom: 20px;
+}
