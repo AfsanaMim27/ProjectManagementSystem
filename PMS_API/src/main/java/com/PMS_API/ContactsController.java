@@ -37,12 +37,12 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
             statement.close();
             dc.DbConnection.close();
         } catch (SQLException e) {
-            logError("/api/contacts/", "Query execution fails.");
+            logError("/api/contacts/", e.getMessage());
         }
         return contactList;
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public Boolean deleteContact(@PathVariable("id") int id) {
         try {
             DatabaseConnection dc = new DatabaseConnection();
@@ -63,7 +63,7 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
                 logError("/api/contacts/delete/" + id, "Contact not found.");
             }
         } catch (SQLException e) {
-            logError("/api/contacts/delete/" + id, "Query execution fails.");
+            logError("/api/contacts/delete/" + id, e.getMessage());
         }
         return false;
     }
@@ -76,16 +76,16 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm");
             String currentDateTimeString = formatter.format(currentDateTime);
             try {
-                statement.executeUpdate("INSERT INTO ErrorLogs ('CreatedDateTime', 'Url', 'ErrorMessage') VALUES ("
-                        + currentDateTimeString + ", " + url + ", " + errorMessage + ")");
+                statement.executeUpdate("INSERT INTO ErrorLogs (CreatedDateTime, Url, ErrorMessage) VALUES ('"
+                        + currentDateTimeString + "', '" + url + "', '" + errorMessage + "')");
             } catch (SQLException e) {
                 System.out.println(
-                        "Storing log record in database fails. Url: " + url + ", Error message: " + errorMessage);
+                        "Storing log record in database fails. Url: " + url + ", Error message: " + e.getMessage());
             }
             statement.close();
             dc.DbConnection.close();
         } catch (Exception e) {
-            System.out.println("Creating log fails. Url: " + url + ", Error message: " + errorMessage);
+            System.out.println("Creating log fails. Url: " + url + ", Error message: " + e.getMessage());
         }
     }
 }
@@ -111,7 +111,7 @@ class DatabaseConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             DbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/projecttrackingsystem", "root",
-                    "Pass5577!");
+                    "Pass437#");
         } catch (ClassNotFoundException exception) {
             System.out.println("JDBC Driver is not found.");
         } catch (SQLException exception) {
