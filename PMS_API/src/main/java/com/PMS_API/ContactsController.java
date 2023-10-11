@@ -2,7 +2,6 @@ package com.PMS_API;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.sql.*;
@@ -21,7 +20,7 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
         try {
             DatabaseConnection dc = new DatabaseConnection();
             Statement statement = dc.DbConnection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Contacts");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Contacts WHERE Trashed = 0");
             while (resultSet.next()) {
                 Contact contact = new Contact();
                 contact.ContactId = resultSet.getInt("ContactId");
@@ -111,7 +110,7 @@ class DatabaseConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             DbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/projecttrackingsystem", "root",
-                    "Pass437#");
+                    "Pass5577!");
         } catch (ClassNotFoundException exception) {
             System.out.println("JDBC Driver is not found.");
         } catch (SQLException exception) {
