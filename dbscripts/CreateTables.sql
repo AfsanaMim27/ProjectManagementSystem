@@ -126,5 +126,12 @@ CREATE TABLE ProjectMembers(
     CONSTRAINT PK_ProjectMember PRIMARY KEY (ProjectId, MemberId),
     CONSTRAINT FK_ProjectMemberProject FOREIGN KEY (ProjectId) REFERENCES Projects(ProjectId),
     CONSTRAINT FK_ProjectMemberContact FOREIGN KEY (MemberId) REFERENCES Contacts(ContactId)
-)
-    
+);
+
+CREATE TABLE ErrorLogs(
+	LogId int not null auto_increment,
+    CreatedDateTime datetime,
+    Url varchar(512),
+	ErrorMessage varchar(1024),
+    CONSTRAINT PK_ErrorLog PRIMARY KEY (LogId)
+);
