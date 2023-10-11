@@ -55,13 +55,13 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
             }
             if (isContactFound) {
                 statement.executeUpdate("UPDATE Contacts SET Trashed = 1 WHERE ContactId = " + id);
+                resultSet.close();
+                statement.close();
+                dc.DbConnection.close();
+                return true;
             } else {
                 logError("/api/contacts/delete/" + id, "Contact not found.");
             }
-            resultSet.close();
-            statement.close();
-            dc.DbConnection.close();
-            return true;
         } catch (SQLException e) {
             logError("/api/contacts/delete/" + id, "Query execution fails.");
         }
