@@ -6,7 +6,7 @@ USE ProjectTrackingSystem;
 
 CREATE TABLE Users(
 	UserId int NOT NULL AUTO_INCREMENT,
-    Trashed bool,
+    Trashed bool default 0,
     UserRole int,
     UserName varchar(128),
     UserPassword varchar(512),
@@ -15,7 +15,7 @@ CREATE TABLE Users(
  
 CREATE TABLE Contacts (
     ContactId int NOT NULL AUTO_INCREMENT,
-    Trashed bool,
+    Trashed bool default 0,
     ContactType int,
     LastName varchar(128),
     FirstName varchar(128),
@@ -39,7 +39,7 @@ CREATE TABLE Contacts (
  
  CREATE TABLE Projects(
 	ProjectId int NOT NULL AUTO_INCREMENT,
-	Trashed bool,
+	Trashed bool default 0,
 	ProjectStatus int,
     Title varchar(128),
     ShortDescription varchar(1024),
@@ -54,7 +54,7 @@ CREATE TABLE Contacts (
 
   CREATE TABLE Phases(
 	PhaseId int NOT NULL AUTO_INCREMENT,
-    Trashed bool,
+    Trashed bool default 0,
     Title varchar(128),
     Weight int,
     StartDate datetime,
@@ -66,7 +66,7 @@ CREATE TABLE Contacts (
  
   CREATE TABLE Tasks(
 	TaskId int NOT NULL AUTO_INCREMENT,
-    Trashed bool,
+    Trashed bool default 0,
     TaskStatus int,
     Title varchar(128),
     ShortDescription varchar(1024),
