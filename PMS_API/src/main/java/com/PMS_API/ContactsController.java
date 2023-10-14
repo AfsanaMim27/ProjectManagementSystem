@@ -14,7 +14,7 @@ import java.util.Date;
 @RequestMapping("/api/contacts")
 public class ContactsController extends DatabaseConnection implements ErrorLogging {
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public List<Contact> contactList() {
         List<Contact> contactList = new ArrayList<>();
         try {

@@ -8,3 +8,16 @@ export async function GET(request, response) {
     console.log(projectCounts);
     return Response.json({ records: rows, pagination: { totalPages: Math.ceil(parseInt(projectCounts[0].TotalProjects) / size), totalItems: projectCounts[0].TotalProjects } });
 }
+
+export async function POST(request, response) {
+    const submittedData = request.body;
+    console.log("submittedData:", submittedData.Title);
+
+    let dbConnection = await connectToDatabase();
+    const queryString = "INSERT INTO Projects (ProjectStatus, Title, ShortDescription, StartDate, DueDate, EndDate, ProjectManager) VALUES (2, " + submittedData.Title + ", " + submittedData.Description + ", " + submittedData.StartDate + ", " + submittedData.DueDate + ", " + submittedData.ProjectManager + ")";
+    dbConnection.query(queryString, (error, results) => {
+        if (error) return res.json({ error: error });
+        console.log(results);
+        res.status(200).json({ results });
+    }); 
+}

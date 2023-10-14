@@ -21,7 +21,7 @@ export default function GlobalBar() {
                                 <Link className='dropdown-item' href="/contacts/list">Contact List</Link>
                             </NavDropdown>
                             <NavDropdown title="Projects" id="basic-nav-dropdown">
-                                <Link className='dropdown-item' href="#">Add Project</Link>                            
+                                <Link className='dropdown-item' href="/projects/add-project">Add Project</Link>                            
                                 <Link className='dropdown-item' href="/projects/list">Project List</Link>
                             </NavDropdown>
                             <Link className='nav-link' href="/resources-utilization">Resources Utilization</Link>

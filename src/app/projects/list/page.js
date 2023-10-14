@@ -2,6 +2,7 @@
 import Loading from '@/app/components/loading';
 import Pagination from '@/app/components/pagination'
 import moment from 'moment/moment';
+import Link from 'next/link';
 import { useState, useEffect } from 'react'
 
 export default function ProjectList() {
@@ -24,8 +25,8 @@ export default function ProjectList() {
   if (isLoading) return <Loading></Loading>
   if (!projectList) return <p>No projects found</p>
   return (
-      <div className='container'>
-        <div className='card-title h5 mb-3'>Projects</div>
+      <div ç>
+        <div className='card-title mb-3 d-flex justify-content-between'><span className='h5'>Projects</span><Link href="/projects/add-project">Add Project</Link></div>
         <div>
           <table className='table table-light table-hover table-striped'>
             <thead>
