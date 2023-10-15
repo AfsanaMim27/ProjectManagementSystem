@@ -13,20 +13,20 @@ export default function ProjectList() {
   const [page, setPage] = useState(1);
  
   useEffect(() => {
-    fetch('/api/projects?page='+page+'&size='+size)
+    fetch('/api/projects?page=' + page + '&size=' + size)
       .then((res) => { return res.json() })
       .then((data) => {
         setProjectList(data.records);
         setPagination(data.pagination);
         setLoading(false);
-      })
+      });
   }, [page])
  
   if (isLoading) return <Loading></Loading>
   if (!projectList) return <p>No projects found</p>
   return (
       <div ç>
-        <div className='card-title mb-3 d-flex justify-content-between'><span className='h5'>Projects</span><Link href="/projects/add-project">Add Project</Link></div>
+        <div className='card-title mb-3 d-flex justify-content-between'><span className='h5'>Projects</span><Link href="/projects/add">Add Project</Link></div>
         <div>
           <table className='table table-light table-hover table-striped'>
             <thead>

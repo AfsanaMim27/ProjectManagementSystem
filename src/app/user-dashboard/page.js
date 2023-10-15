@@ -5,12 +5,12 @@ import { Col, Row } from 'react-bootstrap';
 import { DoughnutChart } from '../components/charts/doughnutChart';
 import Loading from '../components/loading';
 
-export default function ProjectList() {
+export default function ProjectList(props) {
   const [userDashboard, setUserDashboard] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const contactId = 3;
+  const {id} = props.searchParams;
   useEffect(() => {
-    fetch('/api/userDashboard?contactId='+ contactId)
+    fetch('/api/userDashboard?contactId='+ id)
       .then((res) => { return res.json() })
       .then((data) => {
         setUserDashboard(data);
