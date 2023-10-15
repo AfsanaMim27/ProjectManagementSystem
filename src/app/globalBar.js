@@ -15,7 +15,7 @@ export default function GlobalBar() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Link className='nav-link' href="/user-dashboard">Dashboard</Link>
+                            <Link className='nav-link' href="/user-dashboard?id=3">Dashboard</Link>
                             <NavDropdown title="Contacts" id="basic-nav-dropdown">
                                 <Link className='dropdown-item' href="#">Add Contact</Link>
                                 <Link className='dropdown-item' href="/contacts/list">Contact List</Link>

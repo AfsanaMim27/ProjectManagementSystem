@@ -1,9 +1,10 @@
 "use client"
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react'
 
 export default function () {
+    const [contactList, setContactList] = useState(null);
+
     const { push } = useRouter();
     async function onSubmit(event) {
         event.preventDefault()
@@ -17,6 +18,14 @@ export default function () {
             push('/projects/details?id=' + data.Id);
         });
     }
+
+    useEffect(() => {
+        fetch('/api/contacts?page=1&size=9999999')
+          .then((res) => { return res.json() })
+          .then((data) => {
+            setContactList(data.records);
+          })
+    }, [])
 
     return(
         <div className="container">
@@ -32,7 +41,12 @@ export default function () {
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Manager</label>
-                    <input placeholder="Select Manager" class="form-control" name="ProjectManager" />
+                    <select class="form-select" aria-label="Select Manager" name="ProjectManager">
+                        <option selected>Select Manager</option>
+                        {contactList ? contactList.map(contact => {
+                            return <option value={contact.ContactId}>{ contact.FirstName + " " + contact.LastName }</option>                            
+                        }): null}
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Start Date</label>

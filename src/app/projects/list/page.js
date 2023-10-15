@@ -25,7 +25,7 @@ export default function ProjectList() {
   if (isLoading) return <Loading></Loading>
   if (!projectList) return <p>No projects found</p>
   return (
-      <div ç>
+      <div className="container">
         <div className='card-title mb-3 d-flex justify-content-between'><span className='h5'>Projects</span><Link href="/projects/add">Add Project</Link></div>
         <div>
           <table className='table table-light table-hover table-striped'>
@@ -43,7 +43,7 @@ export default function ProjectList() {
               {projectList ? projectList.map((project) => {
                 return (
                   <tr key={project.ProjectId}>
-                    <td>{project.Title}</td>
+                    <td><Link className='dropdown-item' href={"/projects/details?id=" + project.ProjectId}>{project.Title}</Link></td>
                     <td>{project.ShortDescription}</td>
                     <td>{project.ProjectManagerName}</td>
                     <td>{project.StartDate ? moment(project.StartDate).format('DD-MM-YYYY, h:mm a') : ""}</td>
