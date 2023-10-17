@@ -1,14 +1,25 @@
 package com.PMS_API;
 
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+//import jakarta.servlet.ServletContext;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.io.File;
+import java.io.FileWriter;
 
 @RestController
 @RequestMapping("/api/contacts")
@@ -18,6 +29,7 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
     public List<Contact> contactList() {
         List<Contact> contactList = new ArrayList<>();
         try {
+            logErrorFile("/api/contacts/", "request started");
             DatabaseConnection dc = new DatabaseConnection();
             Statement statement = dc.DbConnection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Contacts WHERE Trashed = 0");
@@ -36,7 +48,7 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
             statement.close();
             dc.DbConnection.close();
         } catch (SQLException e) {
-            logError("/api/contacts/", e.getMessage());
+            logErrorFile("/api/contacts/", e.getMessage());
         }
         return contactList;
     }
@@ -59,15 +71,52 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
                 dc.DbConnection.close();
                 return true;
             } else {
-                logError("/api/contacts/delete/" + id, "Contact not found.");
+                logErrorFile("/api/contacts/delete/" + id, "Contact not found.");
             }
         } catch (SQLException e) {
-            logError("/api/contacts/delete/" + id, e.getMessage());
+            logErrorFile("/api/contacts/delete/" + id, e.getMessage());
         }
         return false;
     }
 
-    public void logError(String url, String errorMessage) {
+    @GetMapping("/error_logs")
+    public String error_logs() {
+        try {
+            Path filePath = Paths.get(ErrorLogging.GetErrorLogFilePath());
+            String fileContent = Files.readString(filePath);
+            return fileContent;
+        } catch (IOException e) {
+            System.out.println("An unexpected error is occurred when errors are retrieved.");
+            return "No errors found";
+        }
+    }
+
+    public void logErrorFile(String url, String errorMessage) {
+        try {
+            // ServletContext servletContext = getServletContext();
+            /// servletContext.getRealPath("/");
+            String filePath = ErrorLogging.GetErrorLogFilePath();
+            File logFile = new File(filePath);
+            if (!(logFile.exists())) {
+                boolean isFileCreated = logFile.createNewFile();
+                System.out.println(isFileCreated ? (filePath + " file is created successfully.")
+                        : (filePath + " file create fails."));
+            }
+            // FileWriter fileWriter = new FileWriter(logFile);
+            StringBuilder sb = new StringBuilder();
+            sb.append("{");
+            sb.append("\nUrl: ").append(url);
+            sb.append("\nError: ").append(errorMessage);
+            sb.append("\n},\n");
+            Files.write(Paths.get(filePath), sb.toString().getBytes(), StandardOpenOption.APPEND);
+            // fileWriter.write(sb.toString());
+            // fileWriter.close();
+        } catch (IOException exception) {
+            System.out.println("An unexpected error is occurred when error is logged.");
+        }
+    }
+
+    public void logErrorDB(String url, String errorMessage) {
         try {
             DatabaseConnection dc = new DatabaseConnection();
             Statement statement = dc.DbConnection.createStatement();
@@ -100,7 +149,15 @@ class Contact {
 }
 
 interface ErrorLogging {
-    public void logError(String url, String errorMessage);
+    public static String GetErrorLogFilePath() {
+        String rootPath = "C:/ProjectManagementSystem/PMS_API/";
+        String filePath = rootPath + "ErrorLog.txt";
+        return filePath;
+    }
+
+    public void logErrorFile(String url, String errorMessage);
+
+    public void logErrorDB(String url, String errorMessage);
 }
 
 class DatabaseConnection {
