@@ -93,24 +93,18 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
 
     public void logErrorFile(String url, String errorMessage) {
         try {
-            // ServletContext servletContext = getServletContext();
-            /// servletContext.getRealPath("/");
             String filePath = ErrorLogging.GetErrorLogFilePath();
             File logFile = new File(filePath);
             if (!(logFile.exists())) {
                 boolean isFileCreated = logFile.createNewFile();
-                System.out.println(isFileCreated ? (filePath + " file is created successfully.")
-                        : (filePath + " file create fails."));
+                System.out.println(isFileCreated ? (filePath + " file is created successfully.") : (filePath + " file create fails."));
             }
-            // FileWriter fileWriter = new FileWriter(logFile);
             StringBuilder sb = new StringBuilder();
             sb.append("{");
             sb.append("\nUrl: ").append(url);
             sb.append("\nError: ").append(errorMessage);
             sb.append("\n},\n");
             Files.write(Paths.get(filePath), sb.toString().getBytes(), StandardOpenOption.APPEND);
-            // fileWriter.write(sb.toString());
-            // fileWriter.close();
         } catch (IOException exception) {
             System.out.println("An unexpected error is occurred when error is logged.");
         }
