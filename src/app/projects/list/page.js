@@ -43,7 +43,7 @@ export default function ProjectList() {
               {projectList ? projectList.map((project) => {
                 return (
                   <tr key={project.ProjectId}>
-                    <td><Link className='dropdown-item' href={"/projects/details?id=" + project.ProjectId}>{project.Title}</Link></td>
+                    <td><Link href={"/projects/details?id=" + project.ProjectId}>{project.Title}</Link></td>
                     <td>{project.ShortDescription}</td>
                     <td>{project.ProjectManagerName}</td>
                     <td>{project.StartDate ? moment(project.StartDate).format('DD-MM-YYYY, h:mm a') : ""}</td>

@@ -2,6 +2,7 @@
 import Loading from '@/app/components/loading';
 import Pagination from '@/app/components/pagination'
 import { useState, useEffect } from 'react'
+import Link from 'next/link';
 
 export default function ContactList() {
   const size = 5;
@@ -55,7 +56,7 @@ export default function ContactList() {
             {contactList ? contactList.map((contact) => {
               return (
                 <tr key={contact.ContactId}>
-                  <td>{contact.FirstName + " " + contact.LastName}</td>
+                  <td><Link href={"/user-dashboard?id="+contact.ContactId}>{contact.FirstName + " " + contact.LastName}</Link></td>
                   <td>{contact.Phone}</td>
                   <td>{contact.Email}</td>
                   <td>{contact.Address + ", " + contact.City}</td>
