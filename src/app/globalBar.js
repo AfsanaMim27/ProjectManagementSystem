@@ -16,15 +16,18 @@ export default function GlobalBar() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Link className='nav-link' href="/user-dashboard?id=3">Dashboard</Link>
-                            <NavDropdown title="Contacts" id="basic-nav-dropdown">
+                            <NavDropdown title="Contacts">
                                 <Link className='dropdown-item' href="#">Add Contact</Link>
                                 <Link className='dropdown-item' href="/contacts/list">Contact List</Link>
                             </NavDropdown>
-                            <NavDropdown title="Projects" id="basic-nav-dropdown">
+                            <NavDropdown title="Projects">
                                 <Link className='dropdown-item' href="/projects/add">Add Project</Link>                            
                                 <Link className='dropdown-item' href="/projects/list">Project List</Link>
                             </NavDropdown>
-                            <Link className='nav-link' href="/resources-utilization">Resources Utilization</Link>
+                            <NavDropdown title="Tasks">
+                                <Link className='dropdown-item' href="/tasks/add">Add Task</Link>                            
+                                <Link className='dropdown-item' href="/tasks/list">Task List</Link>
+                            </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
             </Container>

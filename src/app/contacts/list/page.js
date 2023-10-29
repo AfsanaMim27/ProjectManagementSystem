@@ -21,6 +21,10 @@ export default function ContactList() {
         setPagination(data.pagination);
         setLoading(false);
       })
+      .catch(error =>{
+        console.log("Failed to get contact list. Error:" + error);
+        setLoading(false);
+      });      
   }, [page])
  
   if (isLoading) return <Loading></Loading>

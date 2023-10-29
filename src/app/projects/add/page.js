@@ -30,33 +30,33 @@ export default function () {
     return(
         <div className="container">
             <div className='card-title h5 mb-3'>Add Project</div>                         
-            <form class="w-50 mt-2" onSubmit={onSubmit}>
-                <div class="mb-3">
-                    <label class="form-label">Title</label>
-                    <input placeholder="Enter Title" class="form-control" name="Title" />
+            <form className = "w-50 mt-2" onSubmit={onSubmit}>
+                <div className = "mb-3">
+                    <label className = "form-label">Title</label>
+                    <input placeholder="Enter Title" className = "form-control" name="Title" />
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea name="Description" placeholder="Enter Description" class="form-control"></textarea>
+                <div className = "mb-3">
+                    <label className = "form-label">Description</label>
+                    <textarea name="Description" placeholder="Enter Description" className = "form-control"></textarea>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Manager</label>
-                    <select class="form-select" aria-label="Select Manager" name="ProjectManager">
+                <div className = "mb-3">
+                    <label className = "form-label">Manager</label>
+                    <select className = "form-select" aria-label="Select Manager" name="ProjectManager">
                         <option selected>Select Manager</option>
                         {contactList ? contactList.map(contact => {
                             return <option value={contact.ContactId}>{ contact.FirstName + " " + contact.LastName }</option>                            
                         }): null}
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Start Date</label>
-                    <input placeholder="Select Start Date" class="form-control" type="date" name="StartDate" />
+                <div className = "mb-3">
+                    <label className = "form-label">Start Date</label>
+                    <input placeholder="Select Start Date" className = "form-control" type="date" name="StartDate" />
                 </div>
-                <div class="mb-4">
-                    <label class="form-label">Due Date</label>
-                    <input placeholder="Select Due Date" class="form-control" type="date" name="DueDate" />
+                <div className = "mb-4">
+                    <label className = "form-label">Due Date</label>
+                    <input placeholder="Select Due Date" className = "form-control" type="date" name="DueDate" />
                 </div>
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="submit" className = "btn btn-primary">Add</button>
             </form>
         </div>
     );

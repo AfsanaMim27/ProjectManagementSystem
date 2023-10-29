@@ -19,6 +19,10 @@ export default function ProjectList() {
         setProjectList(data.records);
         setPagination(data.pagination);
         setLoading(false);
+      })
+      .catch(error =>{
+        console.log("Failed to get project list. Error:" + error);
+        setLoading(false);
       });
   }, [page])
  
