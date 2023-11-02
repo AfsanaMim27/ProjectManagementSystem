@@ -55,7 +55,7 @@ public class TasksController extends DatabaseConnection implements ErrorLogging 
                 isTaskFound = taskId == id;
             }
             if (isTaskFound) {
-                statement.executeUpdate("UPDATE Tasks SET Trashed = 1 WHERE TasktId = " + id);
+                statement.executeUpdate("UPDATE Tasks SET Trashed = 1 WHERE TaskId = " + id);
                 resultSet.close();
                 statement.close();
                 dc.DbConnection.close();
