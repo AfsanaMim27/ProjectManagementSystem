@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Loading from '@/app/components/loading';
 import moment from 'moment';
-
+import Link from 'next/link';
 
 export default function (props) {
   const {id} = props.searchParams;
@@ -52,6 +52,7 @@ export default function (props) {
             }): null}
           </tbody>
         </table>
+        <b><Link href={"/tasks/list?projectId=" + id}>Task List</Link></b>
       </div>
   );
 }

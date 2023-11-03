@@ -26,7 +26,7 @@ export default function TaskList(props) {
             console.log("Failed to get task list. Error:" + error);
           setLoading(false);
         });
-    }, [page]);
+    }, [page, projectId]);
 
     if (isLoading) return <Loading></Loading>
     if (!taskList) return <p>No tasks found</p>
@@ -60,7 +60,7 @@ export default function TaskList(props) {
                       <td>{task.DueDate ? moment(task.DueDate).format('DD-MM-YYYY, h:mm a') : ""}</td>
                       <td>{task.EndDate ? moment(task.EndDate).format('DD-MM-YYYY, h:mm a') : ""}</td>
                       <td>{task.EstimatedDuration ? task.EstimatedDuration : 0} Hrs</td>
-                      <td><span className='taskStatus' style={{ backgroundColor: task.Color }}>{task.TaskStatus}</span></td>
+                      <td><span className='statusCircle' style={{ backgroundColor: task.Color }}>{task.TaskStatus}</span></td>
                     </tr>
                   );
                 }): null}

@@ -28,6 +28,10 @@ export default function GlobalBar() {
                                 <Link className='dropdown-item' href="/tasks/add">Add Task</Link>                            
                                 <Link className='dropdown-item' href="/tasks/list">Task List</Link>
                             </NavDropdown>
+                            <NavDropdown title="Activities">
+                                <Link className='dropdown-item' href="/activities/add">Add Activity</Link>                            
+                                <Link className='dropdown-item' href="/activities/list">Activity List</Link>
+                            </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
             </Container>

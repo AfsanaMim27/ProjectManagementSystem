@@ -94,7 +94,7 @@ export default function ProjectList(props) {
                       <td>{task.PhaseTitle}</td>
                       <td>{task.DueDate ? moment(task.DueDate).format('DD-MM-YYYY, h:mm a') : ""}</td>
                       <td>{task.EstimatedDuration ? task.EstimatedDuration : 0} Hrs</td>
-                      <td><span className='taskStatus' style={{ backgroundColor: task.Color }}>{task.TaskStatus}</span></td>
+                      <td><span className='statusCircle' style={{ backgroundColor: task.Color }}>{task.TaskStatus}</span></td>
                     </tr>
                   );
                 }): null}
