@@ -1,0 +1,12 @@
+.loginFormContainer{
+    display: grid;
+    place-items: center;
+    margin-top: 150px;
+}
+
+.loginForm{
+    width: 320px;
+    background: aliceblue;
+    padding: 1.25rem 2rem;
+    border-radius: 2rem;
+}

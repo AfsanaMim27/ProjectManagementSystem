@@ -2,13 +2,18 @@
 import moment from 'moment/moment';
 import { useState, useEffect } from 'react'
 import { Col, Row } from 'react-bootstrap';
-import { DoughnutChart } from '../components/charts/doughnutChart';
-import Loading from '../components/loading';
+import { DoughnutChart } from '../../components/charts/doughnutChart';
+import Loading from '../../components/loading';
+import { useSession } from "next-auth/react";
 
 export default function ProjectList(props) {
+  const { data } = useSession();
   const [userDashboard, setUserDashboard] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const {id} = props.searchParams;
+  let { id } = props.searchParams;
+  if (!id && data) {
+    id = data.user.contactId;
+  }
   useEffect(() => {
     fetch('/api/userDashboard?contactId='+ id)
       .then((res) => { return res.json() })
@@ -16,7 +21,7 @@ export default function ProjectList(props) {
         setUserDashboard(data);
         setLoading(false);
       })
-  }, [])
+  }, [id])
  
   if (isLoading) return <Loading></Loading>
   if (!userDashboard) return <p>No contact details found</p>
