@@ -18,7 +18,8 @@ public class TasksController extends DatabaseConnection implements ErrorLogging 
         try {
             DatabaseConnection dc = new DatabaseConnection();
             Statement statement = dc.DbConnection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT CONCAT(c.FirstName, '', c.LastName) AS AssignedTo, t.TaskId, t.Title, t.ShortDescription, p.Title AS ProjectTitle, ph.Title AS PhaseTitle,t.StartDate, t.DueDate,t.EndDate, t.EstimatedDuration, s.Title AS TaskStatus, s.Color FROM Tasks AS t INNER JOIN Contacts as c ON c.ContactId = t.AssignedTo INNER JOIN Statuses AS s ON s.StatusId = t.TaskStatus INNER JOIN Projects AS p ON p.ProjectId = t.ProjectId INNER JOIN Phases AS ph ON ph.PhaseId = t.PhaseId WHERE t.Trashed = 0");
+            ResultSet resultSet = statement.executeQuery(
+                    "SELECT CONCAT(c.FirstName, '', c.LastName) AS AssignedTo, t.TaskId, t.Title, t.ShortDescription, p.Title AS ProjectTitle, ph.Title AS PhaseTitle,t.StartDate, t.DueDate,t.EndDate, t.EstimatedDuration, s.Title AS TaskStatus, s.Color FROM Tasks AS t INNER JOIN Contacts as c ON c.ContactId = t.AssignedTo INNER JOIN Statuses AS s ON s.StatusId = t.TaskStatus INNER JOIN Projects AS p ON p.ProjectId = t.ProjectId INNER JOIN Phases AS ph ON ph.PhaseId = t.PhaseId WHERE t.Trashed IS NULL OR t.Trashed = 0");
             while (resultSet.next()) {
                 Task task = new Task();
                 task.TaskId = resultSet.getInt("TaskId");
@@ -72,7 +73,7 @@ public class TasksController extends DatabaseConnection implements ErrorLogging 
         return false;
     }
 
-     public void logErrorFile(String url, String errorMessage) {
+    public void logErrorFile(String url, String errorMessage) {
         ErrorLogging.StoreErrorInFile(url, errorMessage);
     }
 
@@ -94,4 +95,3 @@ class Task {
     public String ProjectId;
     public String PhaseId;
 }
-

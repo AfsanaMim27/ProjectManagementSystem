@@ -18,7 +18,7 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
         try {
             DatabaseConnection dc = new DatabaseConnection();
             Statement statement = dc.DbConnection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Contacts WHERE Trashed = 0");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Contacts WHERE Trashed IS NULL OR Trashed = 0");
             while (resultSet.next()) {
                 Contact contact = new Contact();
                 contact.ContactId = resultSet.getInt("ContactId");
@@ -86,4 +86,3 @@ class Contact {
     public String Phone;
     public String Email;
 }
-

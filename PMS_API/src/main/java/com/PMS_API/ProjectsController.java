@@ -10,14 +10,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/projects")
-public class ProjectsController extends DatabaseConnection implements ErrorLogging{
+public class ProjectsController extends DatabaseConnection implements ErrorLogging {
     @GetMapping("/list")
-    public List<Project>projectList(){
+    public List<Project> projectList() {
         List<Project> projectList = new ArrayList<>();
-        try{
+        try {
             DatabaseConnection dc = new DatabaseConnection();
             Statement statement = dc.DbConnection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT p.*, CONCAT(c.FirstName, ' ', c.LastName) AS ProjectManagerName FROM projects AS p INNER JOIN contacts AS c ON p.ProjectManager = c.ContactId where p.Trashed = 0");
+            ResultSet resultSet = statement.executeQuery(
+                    "SELECT p.*, CONCAT(c.FirstName, ' ', c.LastName) AS ProjectManagerName FROM projects AS p INNER JOIN contacts AS c ON p.ProjectManager = c.ContactId where p.Trashed IS NULL OR p.Trashed = 0");
             while (resultSet.next()) {
                 Project project = new Project();
                 project.ProjectId = resultSet.getInt("ProjectId");
@@ -28,8 +29,8 @@ public class ProjectsController extends DatabaseConnection implements ErrorLoggi
                 project.DueDate = resultSet.getString("DueDate");
                 project.ProjectManager = resultSet.getString("ProjectManagerName");
                 projectList.add(project);
-        }
-        resultSet.close();
+            }
+            resultSet.close();
             statement.close();
             dc.DbConnection.close();
         } catch (SQLException e) {
@@ -37,6 +38,7 @@ public class ProjectsController extends DatabaseConnection implements ErrorLoggi
         }
         return projectList;
     }
+
     @GetMapping("/delete/{id}")
     public Boolean deleteProject(@PathVariable("id") int id) {
         try {
