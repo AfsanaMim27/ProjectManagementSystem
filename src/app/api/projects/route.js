@@ -11,7 +11,7 @@ export async function GET(request, response) {
   } else {
     const { page, size } = getPageNumberAndSize(request);
     const [rows, fields] = await dbConnection.execute("SELECT p.*, CONCAT(c.FirstName, ' ', c.LastName) AS ProjectManagerName FROM projects AS p INNER JOIN contacts AS c ON p.ProjectManager = c.ContactId LIMIT " + size + " OFFSET " + ((page - 1) * size));
-    const [projectCounts, projectCountsFields] = await dbConnection.execute('SELECT COUNT(*) AS TotalProjects FROM Projects WHERE Trashed = 0');
+    const [projectCounts, projectCountsFields] = await dbConnection.execute('SELECT COUNT(*) AS TotalProjects FROM Projects WHERE Trashed IS NULL OR Trashed = 0');
     dbConnection.end();
     return Response.json({ records: rows, pagination: { totalPages: Math.ceil(parseInt(projectCounts[0].TotalProjects) / size), totalItems: projectCounts[0].TotalProjects } });
   }  
