@@ -13,7 +13,7 @@ export async function GET(request, response) {
 export async function POST(request) {
   let submittedData = await request.formData();     
   let dbConnection = await connectToDatabase();
-  const queryString = "INSERT INTO Activities (ActivityStatus, Title, ShortDescription, WorkedDate, Duration, WorkedBy, TaskId) VALUES ( 8, '" + submittedData.get("Title") + "', '" + submittedData.get("Description") + "', '" + submittedData.get("WorkedDate") + "', " + submittedData.get("Duration") + ", " + submittedData.get("WorkedBy") + ", " + submittedData.get("TaskId") + ")";
+  const queryString = "INSERT INTO Activities (ActivityStatus, Title, ShortDescription, WorkedDate, Duration, WorkedBy, TaskId) VALUES ( 10, '" + submittedData.get("Title") + "', '" + submittedData.get("Description") + "', '" + submittedData.get("WorkedDate") + "', " + submittedData.get("Duration") + ", " + submittedData.get("WorkedBy") + ", " + submittedData.get("TaskId") + ")";
   const result = await dbConnection.query(queryString);
   dbConnection.end();
   return Response.json({ "Id": result[0].insertId });

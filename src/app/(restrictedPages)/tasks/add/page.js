@@ -2,7 +2,8 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react'
 
-export default function () {
+export default function TaskAdd() {
+    const [errorOnSave, setErrorOnSave] = useState(null);
     const [contactList, setContactList] = useState(null);
     const [projectList, setProjectList] = useState(null);
     const [phaseList, setPhaseList] = useState(null);
@@ -19,7 +20,11 @@ export default function () {
         .then((res) => { return res.json() })
         .then((data) => {
             push('/tasks/list');
-        });
+        })
+        .catch((error) => {
+            console.log("Failed to add task. Error:" + error);
+            setErrorOnSave("Failed to add task.");
+        });        
     }
 
     useEffect(() => {
@@ -57,20 +62,12 @@ export default function () {
         } 
     }, [selectedProjectId]);
 
-    useEffect(() => {
-        fetch('/api/projects?page=1&size=9999999')
-          .then((res) => { return res.json() })
-          .then((data) => {
-            setProjectList(data.records);
-          })
-          .catch(error=>{
-            console.log("Failed to load projects. Error: ", error);
-          });
-    }, [])
-
     return(
         <div className="container">
-            <div className='card-title h5 mb-3'>Add Task</div>                         
+            <div className='card-title h5 mb-3'>Add Task</div>   
+            {errorOnSave ? (
+                <div className="alert alert-danger">{errorOnSave}</div>
+            ) : null}            
             <form className = "w-50 mt-2" onSubmit={onSubmit}>
                 <div className = "mb-3">
                     <label className = "form-label">Title</label>

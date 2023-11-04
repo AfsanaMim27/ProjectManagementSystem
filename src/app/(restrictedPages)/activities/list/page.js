@@ -43,7 +43,7 @@ export default function ActivityList(props) {
                   <th>Worked Date</th>
                   <th>Task</th>
                   <th>Worked By</th>
-                  <th width="10%">Status</th>
+                  {/* <th width="10%">Status</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -56,7 +56,7 @@ export default function ActivityList(props) {
                       <td>{activity.WorkedDate ? moment(activity.WorkedDate).format('DD-MM-YYYY, h:mm a') : ""}</td>
                       <td>{activity.Task}</td>
                       <td>{activity.WorkedByName}</td>
-                      <td><span className='statusCircle' style={{ backgroundColor: activity.Color }}>{activity.ActivityStatus}</span></td>
+                      {/* <td><span className='statusCircle' style={{ backgroundColor: activity.Color }}>{activity.ActivityStatus}</span></td> */}
                     </tr>
                   );
                 }): null}

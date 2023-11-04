@@ -2,8 +2,9 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react'
 
-export default function () {
-    const [contactList, setContactList] = useState(null);
+export default function AddActivity() {
+  const [errorOnSave, setErrorOnSave] = useState(null);
+  const [contactList, setContactList] = useState(null);
     const [taskList, setTaskList] = useState(null);
     const { push } = useRouter();
     async function onSubmit(event) {
@@ -16,7 +17,11 @@ export default function () {
         .then((res) => { return res.json() })
         .then((data) => {
             push('/activities/list');
-        });
+        })
+        .catch((error) => {
+            console.log("Failed to add activity. Error:" + error);
+            setErrorOnSave("Failed to add activity.");
+        });        
     }
 
     useEffect(() => {
@@ -45,7 +50,10 @@ export default function () {
 
     return(
         <div className="container">
-            <div className='card-title h5 mb-3'>Add Activity</div>                         
+            <div className='card-title h5 mb-3'>Add Activity</div>     
+            {errorOnSave ? (
+                <div className="alert alert-danger">{errorOnSave}</div>
+            ) : null}            
             <form className = "w-50 mt-2" onSubmit={onSubmit}>
                 <div className = "mb-3">
                     <label className = "form-label">Title</label>

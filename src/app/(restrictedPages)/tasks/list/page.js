@@ -52,7 +52,12 @@ export default function TaskList(props) {
                 {taskList ? taskList.map((task) => {
                   return (
                     <tr key={task.TaskId}>
-                      <td>{task.Title}</td>
+                      <td>
+                        <div>{task.Title}</div>
+                        <Link href={"/tasks/update?id=" + task.TaskId}>
+                          Edit
+                        </Link>
+                      </td>
                       <td>{task.ShortDescription}</td>
                       <td>{task.ProjectTitle}</td>
                       <td>{task.PhaseTitle}</td>

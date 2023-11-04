@@ -17,7 +17,6 @@ export default function GlobalBar(props) {
       }
     }
   } catch (error) {
-    console.log(error);
   }
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -67,7 +66,7 @@ export default function GlobalBar(props) {
                   <Link className="dropdown-item" href="/user-dashboard">
                     Dashboard
                   </Link>
-                  <Link className="nav-link" href="#" onClick={() => signOut({ callbackUrl: "/" })}>
+                  <Link className="dropdown-item" href="#" onClick={() => signOut({ callbackUrl: "/" })}>
                     Sign Out
                   </Link>
                 </NavDropdown>
