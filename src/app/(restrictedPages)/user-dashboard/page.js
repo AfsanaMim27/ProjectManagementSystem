@@ -86,7 +86,7 @@ export default function ProjectList(props) {
                   <th>Phase</th>
                   <th>Due Date</th>
                   <th>Estimated</th>
-                  <th>Status</th>
+                  <th width="10%">Status</th>
                 </tr>
               </thead>
               <tbody>

@@ -25,7 +25,7 @@ export default function SignIn(props) {
 				<div className="form-outline mb-4">
 					<label className="form-label">User Name</label>
 					<input
-						type="email"
+						type="text"
 						id="userName"
 						className="form-control"
 						onChange={(e) => setUserName(e.target.value)}

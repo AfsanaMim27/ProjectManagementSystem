@@ -10,7 +10,7 @@ export default function Home() {
           <div className="row justify-content-center">
             <div className="col-8 text-center">
               <h1 className={kanitFont.className}>
-                Comprehensive Project Management Software
+                Project Management Software
               </h1>
               <p className="pt-3 px-5 mx-5">
                 Manage projects, finances and resources in a single system to
