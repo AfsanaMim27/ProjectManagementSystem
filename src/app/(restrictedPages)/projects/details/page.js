@@ -30,7 +30,7 @@ export default function (props) {
         <div>Manager: { project.ProjectManagerName }</div>
         <div>Start Date: {project.StartDate ? moment(project.StartDate).format('DD-MM-YYYY, h:mm a') : ""}</div>
         <div>Due Date: {project.DueDate ? moment(project.DueDate).format('DD-MM-YYYY, h:mm a') : ""}</div>
-        <div className='mb-4'>End Date: {project.EndDate ? moment(project.EndDateDate).format('DD-MM-YYYY, h:mm a') : ""}</div>
+        <div className='mb-4'>End Date: {project.EndDate ? moment(project.EndDate).format('DD-MM-YYYY, h:mm a') : ""}</div>
         <b>Project Phases</b>
         <table className='table table-light table-hover table-striped mt-2'>
           <thead>
