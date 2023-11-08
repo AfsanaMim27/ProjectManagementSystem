@@ -18,3 +18,7 @@ Error: Project not found.
 Url: Delete: /api/contacts107
 Error: Contact not found.
 },
+{
+Url: DELETE: /api/contacts107
+Error: Contact not found.
+},

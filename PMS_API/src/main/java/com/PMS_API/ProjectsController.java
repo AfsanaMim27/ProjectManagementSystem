@@ -54,9 +54,17 @@ public class ProjectsController extends DatabaseConnection implements ErrorLoggi
         try {
             DatabaseConnection dc = new DatabaseConnection();
             Connection connection = dc.GetConnection();
-            Statement statement = connection.createStatement();
-            int result = statement.executeUpdate(insertQuery);
-            newProject.ProjectId = result;
+            String generatedColumns[] = { "ProjectId" };
+            PreparedStatement statement = connection.prepareStatement(insertQuery, generatedColumns);
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating project failed.");
+            } else {
+                ResultSet rs = statement.getGeneratedKeys();
+                if (rs.next()) {
+                    newProject.ProjectId = (int) rs.getLong(1);
+                }
+            }
             return newProject;
         } catch (SQLException e) {
             logErrorFile("POST: /api/projects", e.getMessage());
