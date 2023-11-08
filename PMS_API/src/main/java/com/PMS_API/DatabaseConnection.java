@@ -6,13 +6,8 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
     private Connection DbConnection;
- 
-    public Connection GetConnection()
-    {
-        return this.DbConnection;
-    }
-    
-    DatabaseConnection() {
+
+    public Connection GetConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             DbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/projecttrackingsystem", "root",
@@ -22,5 +17,6 @@ public class DatabaseConnection {
         } catch (SQLException exception) {
             System.out.println("Database connection fails.");
         }
+        return this.DbConnection;
     }
 }
