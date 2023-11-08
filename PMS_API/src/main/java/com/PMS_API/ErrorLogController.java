@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 
 
 @RestController
-@RequestMapping("/api/errorLogs")
+@RequestMapping("/api")
 public class ErrorLogController {
-    @GetMapping("/list")
+    @GetMapping("/errorLogs")
     public String error_logs() {
         try {
             Path filePath = Paths.get(ErrorLogging.GetErrorLogFilePath());

@@ -1,0 +1,20 @@
+{
+Url: POST: /api/projects
+Error: Data truncation: Incorrect datetime value: 'null' for column 'StartDate' at row 1
+},
+{
+Url: POST: /api/projects
+Error: Data truncation: Incorrect datetime value: 'null' for column 'StartDate' at row 1
+},
+{
+Url: DELETE: /api/projects/20
+Error: Project not found.
+},
+{
+Url: DELETE: /api/projects/20
+Error: Project not found.
+},
+{
+Url: Delete: /api/contacts107
+Error: Contact not found.
+},

@@ -10,6 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public interface ErrorLogging {
+    public void logErrorFile(String url, String errorMessage);
+
+    public void logErrorDB(String url, String errorMessage);
+
     public static String GetErrorLogFilePath() {
         String rootPath = "/Users/afsanamim/Github/Office/ProjectManagementSystem/PMS_API/";
         String filePath = rootPath + "ErrorLog.txt";
@@ -38,7 +42,8 @@ public interface ErrorLogging {
     public static void StoreErrorInDb(String url, String errorMessage){
                 try {
             DatabaseConnection dc = new DatabaseConnection();
-            Statement statement = dc.DbConnection.createStatement();
+            Connection connection = dc.GetConnection();
+            Statement statement = connection.createStatement();
             Date currentDateTime = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm");
             String currentDateTimeString = formatter.format(currentDateTime);
@@ -50,13 +55,9 @@ public interface ErrorLogging {
                         "Storing log record in database fails. Url: " + url + ", Error message: " + e.getMessage());
             }
             statement.close();
-            dc.DbConnection.close();
+            connection.close();
         } catch (Exception e) {
             System.out.println("Creating log fails. Url: " + url + ", Error message: " + e.getMessage());
         }
     }
-
-    public void logErrorFile(String url, String errorMessage);
-
-    public void logErrorDB(String url, String errorMessage);
 }

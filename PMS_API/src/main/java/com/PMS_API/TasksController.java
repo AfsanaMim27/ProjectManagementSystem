@@ -1,5 +1,6 @@
 package com.PMS_API;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,15 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api")
 public class TasksController extends DatabaseConnection implements ErrorLogging {
 
-    @GetMapping("/list")
+    @GetMapping("/tasks")
     public List<Task> taskList() {
         List<Task> taskList = new ArrayList<>();
         try {
             DatabaseConnection dc = new DatabaseConnection();
-            Statement statement = dc.DbConnection.createStatement();
+            Connection connection = dc.GetConnection();
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(
                     "SELECT CONCAT(c.FirstName, '', c.LastName) AS AssignedTo, t.TaskId, t.Title, t.ShortDescription, p.Title AS ProjectTitle, ph.Title AS PhaseTitle,t.StartDate, t.DueDate,t.EndDate, t.EstimatedDuration, s.Title AS TaskStatus, s.Color FROM Tasks AS t INNER JOIN Contacts as c ON c.ContactId = t.AssignedTo INNER JOIN Statuses AS s ON s.StatusId = t.TaskStatus INNER JOIN Projects AS p ON p.ProjectId = t.ProjectId INNER JOIN Phases AS ph ON ph.PhaseId = t.PhaseId WHERE t.Trashed IS NULL OR t.Trashed = 0");
             while (resultSet.next()) {
@@ -37,18 +39,19 @@ public class TasksController extends DatabaseConnection implements ErrorLogging 
             }
             resultSet.close();
             statement.close();
-            dc.DbConnection.close();
+            connection.close();
         } catch (SQLException e) {
-            logErrorFile("/api/tasks/", e.getMessage());
+            logErrorFile("GET: /api/tasks", e.getMessage());
         }
         return taskList;
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/tasks/{id}")
     public Boolean deleteTask(@PathVariable("id") int id) {
         try {
             DatabaseConnection dc = new DatabaseConnection();
-            Statement statement = dc.DbConnection.createStatement();
+            Connection connection = dc.GetConnection();
+            Statement statement = connection.createStatement();
             Boolean isTaskFound = false;
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Tasks WHERE TaskId = " + id);
             while (resultSet.next()) {
@@ -59,16 +62,16 @@ public class TasksController extends DatabaseConnection implements ErrorLogging 
                 statement.executeUpdate("UPDATE Tasks SET Trashed = 1 WHERE TaskId = " + id);
                 resultSet.close();
                 statement.close();
-                dc.DbConnection.close();
+                connection.close();
                 return true;
             } else {
                 resultSet.close();
                 statement.close();
-                dc.DbConnection.close();
-                logErrorFile("/api/tasks/delete/" + id, "Task not found.");
+                connection.close();
+                logErrorFile("DELETE: /api/tasks/" + id, "Task not found.");
             }
         } catch (SQLException e) {
-            logErrorFile("/api/tasks/delete/" + id, e.getMessage());
+            logErrorFile("DELETE: /api/tasks/" + id, e.getMessage());
         }
         return false;
     }

@@ -1,5 +1,6 @@
 package com.PMS_API;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,15 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/contacts")
+@RequestMapping("/api")
 public class ContactsController extends DatabaseConnection implements ErrorLogging {
 
-    @GetMapping("/list")
+    @GetMapping("/contacts")
     public List<Contact> contactList() {
         List<Contact> contactList = new ArrayList<>();
         try {
             DatabaseConnection dc = new DatabaseConnection();
-            Statement statement = dc.DbConnection.createStatement();
+            Connection connection = dc.GetConnection();
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Contacts WHERE Trashed IS NULL OR Trashed = 0");
             while (resultSet.next()) {
                 Contact contact = new Contact();
@@ -32,18 +34,19 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
             }
             resultSet.close();
             statement.close();
-            dc.DbConnection.close();
+            connection.close();
         } catch (SQLException e) {
-            logErrorFile("/api/contacts/", e.getMessage());
+            logErrorFile("GET: /api/contacts", e.getMessage());
         }
         return contactList;
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/contacts/{id}")
     public Boolean deleteContact(@PathVariable("id") int id) {
         try {
             DatabaseConnection dc = new DatabaseConnection();
-            Statement statement = dc.DbConnection.createStatement();
+            Connection connection = dc.GetConnection();
+            Statement statement = connection.createStatement();
             Boolean isContactFound = false;
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Contacts WHERE ContactId = " + id);
             while (resultSet.next()) {
@@ -54,16 +57,16 @@ public class ContactsController extends DatabaseConnection implements ErrorLoggi
                 statement.executeUpdate("UPDATE Contacts SET Trashed = 1 WHERE ContactId = " + id);
                 resultSet.close();
                 statement.close();
-                dc.DbConnection.close();
+                connection.close();
                 return true;
             } else {
                 resultSet.close();
                 statement.close();
-                dc.DbConnection.close();
-                logErrorFile("/api/contacts/delete/" + id, "Contact not found.");
+                connection.close();
+                logErrorFile("DELETE: /api/contacts" + id, "Contact not found.");
             }
         } catch (SQLException e) {
-            logErrorFile("/api/contacts/delete/" + id, e.getMessage());
+            logErrorFile("DELETE: /api/contacts" + id, e.getMessage());
         }
         return false;
     }

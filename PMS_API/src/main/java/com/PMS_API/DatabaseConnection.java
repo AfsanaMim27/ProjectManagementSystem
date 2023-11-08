@@ -5,8 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    public Connection DbConnection;
+    private Connection DbConnection;
  
+    public Connection GetConnection()
+    {
+        return this.DbConnection;
+    }
+    
     DatabaseConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

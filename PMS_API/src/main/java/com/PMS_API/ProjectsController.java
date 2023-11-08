@@ -22,7 +22,8 @@ public class ProjectsController extends DatabaseConnection implements ErrorLoggi
         List<Project> projectList = new ArrayList<>();
         try {
             DatabaseConnection dc = new DatabaseConnection();
-            Statement statement = dc.DbConnection.createStatement();
+            Connection connection = dc.GetConnection();
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(
                     "SELECT p.*, CONCAT(c.FirstName, ' ', c.LastName) AS ProjectManagerName FROM projects AS p INNER JOIN contacts AS c ON p.ProjectManager = c.ContactId where p.Trashed IS NULL OR p.Trashed = 0");
             while (resultSet.next()) {
@@ -38,7 +39,7 @@ public class ProjectsController extends DatabaseConnection implements ErrorLoggi
             }
             resultSet.close();
             statement.close();
-            dc.DbConnection.close();
+            connection.close();
         } catch (SQLException e) {
             logErrorFile("GET: /api/projects", e.getMessage());
         }
@@ -52,21 +53,23 @@ public class ProjectsController extends DatabaseConnection implements ErrorLoggi
                 + newProject.DueDate + "', " + newProject.ProjectManager + ")";
         try {
             DatabaseConnection dc = new DatabaseConnection();
-            Statement statement = dc.DbConnection.createStatement();
+            Connection connection = dc.GetConnection();
+            Statement statement = connection.createStatement();
             int result = statement.executeUpdate(insertQuery);
             newProject.ProjectId = result;
             return newProject;
         } catch (SQLException e) {
             logErrorFile("POST: /api/projects", e.getMessage());
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "entity not found");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Project create fails");
     }
 
-    @DeleteMapping("/projects")
+    @DeleteMapping("/projects/{id}")
     public Boolean deleteProject(@PathVariable("id") int id) {
         try {
             DatabaseConnection dc = new DatabaseConnection();
-            Statement statement = dc.DbConnection.createStatement();
+            Connection connection = dc.GetConnection();
+            Statement statement = connection.createStatement();
             Boolean isProjectFound = false;
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Projects WHERE ProjectId = " + id);
             while (resultSet.next()) {
@@ -77,16 +80,16 @@ public class ProjectsController extends DatabaseConnection implements ErrorLoggi
                 statement.executeUpdate("UPDATE Projects SET Trashed = 1 WHERE ProjectId = " + id);
                 resultSet.close();
                 statement.close();
-                dc.DbConnection.close();
+                connection.close();
                 return true;
             } else {
                 resultSet.close();
                 statement.close();
-                dc.DbConnection.close();
-                logErrorFile("DELETE: /api/projects/" + id, "Project not found.");
+                connection.close();
+                logErrorFile("DELETE: /api/projects" + id, "Project not found.");
             }
         } catch (SQLException e) {
-            logErrorFile("DELETE: /api/projects/" + id, e.getMessage());
+            logErrorFile("DELETE: /api/projects" + id, e.getMessage());
         }
         return false;
     }
